@@ -11,7 +11,7 @@ html, body {
   width: 300px;
   height: 400px;
   background-repeat: no-repeat !important;
-  background-position: center !important;
+  background-position: center top !important;
   background-size: cover !important;
   border: #fff 5px solid;
   box-shadow: 1px 1px 3px 0 rgba(0, 0, 0, 0.5);
@@ -35,7 +35,21 @@ html, body {
   width: 100% !important;
   height: 100% !important;
   border: 0 !important;
-  transition: .3s !important; }
+  transition: .3s !important;
+  -webkit-animation: autoScroll 6s 1s linear infinite alternate;
+          animation: autoScroll 6s 1s linear infinite alternate; }
+
+@-webkit-keyframes autoScroll {
+  0% {
+    background-position: center top; }
+  100% {
+    background-position: center bottom; } }
+
+@keyframes autoScroll {
+  0% {
+    background-position: center top; }
+  100% {
+    background-position: center bottom; } }
 
 .tip {
   width: 10rem;
