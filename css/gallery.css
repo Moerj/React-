@@ -36,6 +36,7 @@ html, body {
   height: 100% !important;
   border: 0 !important;
   transition: .3s !important;
+  background-attachment: fixed;
   -webkit-animation: autoScroll 6s 1s linear infinite alternate;
           animation: autoScroll 6s 1s linear infinite alternate; }
 
