@@ -21,7 +21,7 @@ gulp.task('sass', function () {
 
 // react
 gulp.task('react', function () {
-    return gulp.src('./**/src/*.jsx', { base: 'js' })
+    return gulp.src('./**/js/*.jsx', { base: 'js' })
         .pipe(react())
         .pipe(gulp.dest('js'))
         .pipe(notify({ message: 'React task complete', sound: "Glass" }));
