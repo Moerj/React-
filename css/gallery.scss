@@ -5,7 +5,7 @@ html,body{
 	padding: 0;
 	overflow: hidden;
 	background-color: rgb(243, 229, 233);
-	font-size: 2rem;
+	font-size: 1rem;
 }
 @mixin center($width:0,$height:0,$important:null){
 	position: absolute;
@@ -15,11 +15,20 @@ html,body{
 	margin-top: -1*($height/2) $important;
 }
 .ImgMap>*{
-	width: 300px;
-	height: 400px;
-	background-repeat: no-repeat !important;
-	background-position: center top !important;
-	background-size: cover !important;
+	$w:300px;
+	$h:400px;
+	@media screen and (max-width:767px) {
+	    &{
+	        width:180px;
+	        height:220px;
+	        @include center(120px,150px);
+	    }
+	}
+	width: $w;
+	height: $h;
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-size: cover;
 	border:#fff 5px solid;
 	box-shadow: 1px 1px 3px 0 rgba(0,0,0,.5);
 	position: absolute;
@@ -31,7 +40,7 @@ html,body{
 	}
 	
 	// 居中
-	@include center(300px,400px);
+	@include center($w,$h);
 	transform: rotate3d(0,0,1,0);
 }
 .enlarge{
@@ -42,7 +51,6 @@ html,body{
 	height: 100% !important;
 	border: 0 !important;
 	transition: .3s !important;
-	background-attachment:fixed;
 	animation: autoScroll 6s 1s linear infinite alternate;
 	@keyframes autoScroll
 	{
@@ -51,22 +59,24 @@ html,body{
 	}
 }
 .tip{
-	$w:10rem;
-	$h:3rem;
+	$w:100%;
+	$h:4rem;
 	width: $w;
 	height: $h;
-	border-radius: 15px;
 	color: #fff;
 	text-align: center;
 	line-height: $h;
 	z-index: 100;
 	background-color: rgba(0,0,0,.7);
-	font-size: 1.2rem;
-	@include center($w,$h);
-	animation: fadeOut 2s 2s;
+	font-size: 1.3rem;
+	position: absolute;
+	left: 0;
+	bottom: -$h;
+	animation: fadeOut 4s;
 	@keyframes fadeOut
 	{
-		0%{opacity: 1}
-		100%{opacity: 0}
+		0%	 {bottom: -$h}
+		50%	 {bottom:  0 }
+		100% {bottom: -$h}
 	}
 }
