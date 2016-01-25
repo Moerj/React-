@@ -9,26 +9,26 @@ reload = browserSync.reload;
 
 // sass
 gulp.task('sass', function () {
-    gulp.src('./**/css/*.scss' , { base: 'css' })
+    gulp.src('./css/*.scss' )
         .pipe(sass().on('error', sass.logError))
         //添加前缀
         .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9', 'opera 12.1', 'ios 6', 'android 4'))
-        .pipe(gulp.dest('css'))
+        .pipe(gulp.dest('./css'))
         .pipe(reload({stream: true}))
-        .pipe(notify({ message: 'Styles task complete', sound: "Glass" }));
+        .pipe(notify({ message: 'Sass task complete', sound: "Hero" }));
 });
 
 
 // react
 gulp.task('react', function () {
-    return gulp.src('./**/js/*.jsx', { base: 'js' })
+    return gulp.src('./js/*.jsx')
         .pipe(react())
-        .pipe(gulp.dest('js'))
+        .pipe(gulp.dest('./js'))
         .pipe(notify({ message: 'React task complete', sound: "Glass" }));
 });
 
 
-gulp.task('default', function() {
+gulp.task('default', ['sass', 'react'], function() {
 
     browserSync.init({
         // files: "**",

@@ -1,4 +1,4 @@
-;(function(){
+(function(){
 
 /**
  * initialize
@@ -20,7 +20,7 @@
 	 	getMovePostion: function (postion){
 	 		postion = postion.toLowerCase();
 	 		if (postion === 'width' || postion === 'x') 	return document.body.clientWidth/2;
-			if (postion === 'height' || postion === 'y')	return document.body.clientHeight/2;	
+			if (postion === 'height' || postion === 'y')	return document.body.clientHeight/2;
 	 	},
 	 	// 获取随机布局
 	 	randomSign : function (){ // 取随机正负
@@ -74,7 +74,7 @@
 				zIndex:this.state.zIndex,
 				transform:this.state.transform,
 				backgroundImage:this.props.style.backgroundImage
-			}
+			};
  			return(
  				<div onClick={this.props.clickCallback} style={style} className={this.state.centerClass}
 				data-index={this.props.index} randomPostion={this.randomPostion} toCenter={this.toCenter} >
@@ -95,7 +95,7 @@
 		componentDidMount:function (){
 			// 创建操作提示
 			var parent = document.body;
-			var div = document.createElement("div"); 
+			var div = document.createElement("div");
 			div.setAttribute("class", "tip");
 			parent.appendChild(div);
 			div.innerHTML = '点击一张图片';
@@ -128,7 +128,7 @@
 					backgroundImage:'url(images/'+i+'.jpg)',
 					zIndex: 0,
 					transform: self.getRandomTransform()
-				}
+				};
 				return <ImgComponent style={style} clickCallback={self.handleClick} index={i} />
 			};
 			for (var i = 0; i < self.props.total; i++) imgs.push(newImg(i));
