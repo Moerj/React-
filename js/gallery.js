@@ -13,8 +13,6 @@
 /**
  * Public
  */
- var imgMapComponent = [];	// 储存React ImgComponent 每张图片对象实例
-
 	var PublicMixin = {
 	 	// 设置图片在屏幕区域内的随机摆放范围
 	 	getMovePostion: function (postion){
@@ -65,9 +63,8 @@
  				transform:'translate3d(0,0,0) rotate3d(0,0,1,0)'
  			})
  		},
- 		componentDidMount: function (){// 将组件最后的react实例保存下来，方便在父组件中调用其属性和方法。
- 			// console.log(this)
- 			imgMapComponent.push(this);// 记录图片组件react对象实例
+ 		componentDidMount: function (){
+ 			this.props.ImgMap_children.push(this);// 将这个组件实例保存到父组件中
  		},
  		render:function (){
  			var style = {
@@ -104,28 +101,32 @@
 			},4000);
 		},
 		handleClick:function (event) {
+			var imgComponent = this._children;
 			var clickImg = event.target;
 			var index = clickImg.getAttribute('data-index');
 			// 点击已居中的图片
-			if (imgMapComponent[index].state.centerClass) {	//再次点击缩小
-				imgMapComponent[index].setState({centerClass:''})
+			if (imgComponent[index].state.centerClass) {	//再次点击缩小
+				imgComponent[index].setState({centerClass:''})
 			}
-			else if(imgMapComponent[index].state.zIndex > 0) {	//再次点击放大
-				imgMapComponent[index].setState({centerClass:'enlarge'})
+			else if(imgComponent[index].state.zIndex > 0) {	//再次点击放大
+				imgComponent[index].setState({centerClass:'enlarge'})
 			}
 			else{
 				// 居中点击的图片，并重新随机排序其余图片
-				for (var i = 0; i < imgMapComponent.length; i++) {
-					if (index==i) imgMapComponent[i].toCenter(this.props.total);
-					else imgMapComponent[i].randomPostion();
+				for (var i = 0; i < imgComponent.length; i++) {
+					if (index==i) imgComponent[i].toCenter(this.props.total);
+					else imgComponent[i].randomPostion();
 				}
 			}
 		},
 		render: function () {
-			var  self = this, imgs=[],
-			newImg = function (i){
-				return React.createElement(ImgComponent, {clickCallback: self.handleClick, index: i})
-			};
+			this._children = [];// 用于保存子组件的react实例
+			var  
+				self = this, 
+				imgs=[],
+				newImg = function (i){
+					return React.createElement(ImgComponent, {clickCallback: self.handleClick, index: i, ImgMap_children: self._children})
+				};
 			for (var i = 0; i < self.props.total; i++) {
 				imgs.push(newImg(i));
 			}
