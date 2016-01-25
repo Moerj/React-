@@ -47,8 +47,8 @@
  		mixins: [PublicMixin],
  		getInitialState:function (){
  			return{
-				zIndex:this.props.style.zIndex,
-				transform:this.props.style.transform,
+				zIndex:0,
+				transform:this.getRandomTransform(),
 				centerClass:''
  			}
  		},
@@ -73,7 +73,7 @@
  			var style = {
 				zIndex:this.state.zIndex,
 				transform:this.state.transform,
-				backgroundImage:this.props.style.backgroundImage
+				backgroundImage:'url(images/'+this.props.index+'.jpg)',
 			};
  			return(
  				<div onClick={this.props.clickCallback} style={style} className={this.state.centerClass}
@@ -86,7 +86,7 @@
 
  	// 图片池
 	var ImgMap = React.createClass({
-		mixins: [PublicMixin],
+		// mixins: [PublicMixin],
 		getDefaultProps : function () {
 		    return {
 		    	total : 8	//定义图片总数（从0开始计算）
@@ -124,14 +124,11 @@
 		render: function () {
 			var  self = this, imgs=[],
 			newImg = function (i){
-				var style = {
-					backgroundImage:'url(images/'+i+'.jpg)',
-					zIndex: 0,
-					transform: self.getRandomTransform()
-				};
-				return <ImgComponent style={style} clickCallback={self.handleClick} index={i} />
+				return <ImgComponent clickCallback={self.handleClick} index={i} />
 			};
-			for (var i = 0; i < self.props.total; i++) imgs.push(newImg(i));
+			for (var i = 0; i < self.props.total; i++) {
+				imgs.push(newImg(i));
+			}
 			return (<div className="ImgMap">{imgs}</div>)
 		}
 	});
