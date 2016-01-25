@@ -3,22 +3,23 @@
 /**
  * initialize
  */
- document.body.addEventListener("touchmove",function(event){
-     event.preventDefault();
- });
- document.addEventListener('DOMContentLoaded', function() {
-     FastClick.attach(document.body);
- }, false);
+	document.body.addEventListener("touchmove",function(event){
+	    event.preventDefault();
+	});
+	document.addEventListener('DOMContentLoaded', function() {
+	    FastClick.attach(document.body);
+	}, false);
 
 /**
  * Public
  */
 	var PublicMixin = {
 	 	// 设置图片在屏幕区域内的随机摆放范围
-	 	getMovePostion: function (postion){
-	 		postion = postion.toLowerCase();
-	 		if (postion === 'width' || postion === 'x') 	return document.body.clientWidth/2;
-			if (postion === 'height' || postion === 'y')	return document.body.clientHeight/2;
+	 	getMoveX: function (){
+	 		return document.body.clientWidth/2;
+	 	},
+	 	getMoveY: function (){
+	 		return document.body.clientHeight/2;
 	 	},
 	 	// 获取随机布局
 	 	randomSign : function (){ // 取随机正负
@@ -27,12 +28,12 @@
 	 		else n=1;
 	 		return n;
 	 	},
-	 	randomInt : function (n){ // 取随机整数
+	 	randomInt : function (n){ // 取随机整数,范围值0~n
 	 	 	return parseInt(Math.floor(Math.random()*n+1));
 	 	},
 	 	getRandomTransform : function(){// 取随机旋转角度(css3属性)
-	 		return 'translate3d('+this.randomInt(this.getMovePostion('x'))*this.randomSign()+'px,'+
-	 				this.randomInt(this.getMovePostion('y'))*this.randomSign()+'px,0)'+
+	 		return 'translate3d('+this.randomInt(this.getMoveX())*this.randomSign()+'px,'+
+	 				this.randomInt(this.getMoveY())*this.randomSign()+'px,0)'+
 	 				' rotate3d(0,0,1,'+ this.randomInt(180)*this.randomSign() +'deg)';
 	 	}
 	};
@@ -73,9 +74,7 @@
 				backgroundImage:'url(images/'+this.props.index+'.jpg)',
 			};
  			return(
- 				React.createElement("div", {onClick: this.props.clickCallback, style: style, className: this.state.centerClass, 
-				"data-index": this.props.index, randomPostion: this.randomPostion, toCenter: this.toCenter}
- 				)
+ 				React.createElement("div", {onClick: this.props.clickCallback, style: style, className: this.state.centerClass, "data-index": this.props.index})
 			)
  		}
  	});
@@ -83,7 +82,6 @@
 
  	// 图片池
 	var ImgMap = React.createClass({displayName: "ImgMap",
-		// mixins: [PublicMixin],
 		getDefaultProps : function () {
 		    return {
 		    	total : 8	//定义图片总数（从0开始计算）
