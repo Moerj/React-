@@ -64,9 +64,6 @@
  				transform:'translate3d(0,0,0) rotate3d(0,0,1,0)'
  			})
  		},
- 		componentDidMount: function (){
- 			this.props.ImgMap_children.push(this);// 将这个组件实例保存到父组件中
- 		},
  		render:function (){
  			var style = {
 				zIndex:this.state.zIndex,
@@ -123,7 +120,7 @@
 				self = this, 
 				imgs=[],
 				newImg = function (i){
-					return <ImgComponent clickCallback={self.handleClick} index={i} ImgMap_children={self._children} />
+					return <ImgComponent clickCallback={self.handleClick} index={i} ref={function(c){self._children[i] = c}} />
 				};
 			for (var i = 0; i < self.props.total; i++) {
 				imgs.push(newImg(i));
